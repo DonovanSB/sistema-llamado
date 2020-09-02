@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
+import vlc
 import serial
 import json  
 import pydash
@@ -41,6 +42,7 @@ class Conexion:
                 data = json.loads(self.port.readline().rstrip('\n'))
                 data['type'] = self.types[data['type']]
                 self.callModel.signalUpdateCalls.emit(data)
+                print(data)
             except:
                 print('No se pudo decoficar el mensaje')
 
@@ -87,6 +89,16 @@ class Player(QtMultimedia.QMediaPlayer):
         if self.currentSound == callType:
             self.stop()
 
+class PlayerVlc:
+    def __init__(self):
+        player = vlc.MediaPlayer('assets/azul.mp3')
+        # player = instance.media_player_new()
+        # media = instance.media_new('assets/azul.mp3')
+        # player.set_media(media)
+        player.play()
+        player.pause()
+        # player.stop()
+        
 @singleton
 class CallModel(QObject):
     signalUpdateCalls = pyqtSignal(object)

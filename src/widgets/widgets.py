@@ -53,7 +53,7 @@ class RoomTable(QFrame):
         self.rooms = rooms
         self.setStyleSheet( """QFrame {background: #9e9e9e;
                             border-radius: 10px;
-                            margin: 30px 30px 30px 30px}""" )
+                            margin: 30px 30px 70px 30px}""" )
         self.setGraphicsEffect(Shadow())
 
         header1 = self.createHeaders()
@@ -100,7 +100,7 @@ class RoomRow(QFrame):
         self.stopwatch = QTimer()
         self.stopwatch.timeout.connect(self.updateStopwatch)
 
-        self.types = {'azul': '#0d47a1', 'normal': '#00e676', 'bano': '#b71c1c'}
+        self.types = {'azul': '#0d47a1', 'normal': '#00e676', 'bano': '#fdd835'}
         self.flagBlink = True
         self.isActive = False
 

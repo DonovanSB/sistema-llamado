@@ -29,8 +29,8 @@ class Main(QMainWindow):
         self.centerWindow()
 
         # lista para creacion de habitaciones
-        self.rooms = ['201','202','203','204','205 A','205 B']
-        
+        self.rooms = ['201','202','203','204','205 A','205 B', '206']
+        # TODO: logos, validar azul, 
         # Instancia del modelo de Aplicación
         self.callModel = service.CallModel()
         self.callModel.roomNames = self.rooms
@@ -45,6 +45,9 @@ class Main(QMainWindow):
         self.callModel.roomRows = self.roomTable.roomRows
         self.callModel.signalUpdateCalls.connect(self.listenCalls)
         self.callService = service.CallService()
+
+        self.player = service.PlayerVlc()
+        # self.callService.activate('203', 'azul')
 
         # Timer para actualizar la hora
         self.timerHour = QTimer()
