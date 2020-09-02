@@ -91,12 +91,11 @@ class Player(QtMultimedia.QMediaPlayer):
 
 class PlayerVlc:
     def __init__(self):
-        player = vlc.MediaPlayer('assets/azul.mp3')
-        # player = instance.media_player_new()
-        # media = instance.media_new('assets/azul.mp3')
-        # player.set_media(media)
+        instance = vlc.Instance()
+        player = instance.media_player_new()
+        media = instance.media_new('assets/azul.mp3')
+        player.set_media(media)
         player.play()
-        player.pause()
         # player.stop()
         
 @singleton
