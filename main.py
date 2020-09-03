@@ -72,9 +72,9 @@ class Main(QMainWindow):
     def changeEvent(self, event):
         if(event.type() == QEvent.WindowStateChange):
             if(self.isMaximized()):
-                self.statusbar.logo.setStyleSheet('margin-right: 30px')
+                self.statusbar.logo.setStyleSheet('margin-right: 20px')
             else:
-                self.statusbar.logo.setStyleSheet('margin-right: 10px')
+                self.statusbar.logo.setStyleSheet('margin-right: 0px')
         # return super(Main,self).changeEvent(event)
     def closeEvent(self, event):
         self.reply = QMessageBox.question(None,' ',"¿Realmente desea cerrar la aplicación?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)

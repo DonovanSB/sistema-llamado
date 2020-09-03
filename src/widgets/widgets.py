@@ -212,7 +212,7 @@ class StatusBar(QStatusBar):
         super(StatusBar,self).__init__()
         self.setStyleSheet('QStatusBar::item {border: None;}')
         self.logo = QLabel()
-        self.logo.setStyleSheet('margin-right: 10px')
+        self.logo.setStyleSheet('margin-right: 0px')
         image = QPixmap(root + '/assets/logoempresa.png')
         self.logo.setPixmap(image)
         self.addPermanentWidget(self.logo)
