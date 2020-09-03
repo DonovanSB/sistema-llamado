@@ -4,10 +4,10 @@ import sys
 import os
 import time
 import datetime
-from PyQt5.QtWidgets import QToolBar, QGraphicsDropShadowEffect, QLabel, QWidget, QSizePolicy, QFrame, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton
+from PyQt5.QtWidgets import QToolBar, QGraphicsDropShadowEffect, QLabel, QStatusBar, QWidget, QSizePolicy, QFrame, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton
 from PyQt5.QtGui import QColor, QFont, QPixmap
 from PyQt5.QtCore import Qt, QDateTime, QTimer, QThread, QElapsedTimer
-parent = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
+parent = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir)
 root = os.path.abspath(parent)
 sys.path.append(root + "/src/services")
 import service
@@ -53,7 +53,7 @@ class RoomTable(QFrame):
         self.rooms = rooms
         self.setStyleSheet( """QFrame {background: #9e9e9e;
                             border-radius: 10px;
-                            margin: 30px 30px 70px 30px}""" )
+                            margin: 30px 30px 10px 30px}""" )
         self.setGraphicsEffect(Shadow())
 
         header1 = self.createHeaders()
@@ -103,11 +103,12 @@ class RoomRow(QFrame):
         self.types = {'azul': '#0d47a1', 'normal': '#00e676', 'bano': '#fdd835'}
         self.flagBlink = True
         self.isActive = False
+        self.callType = None
 
         self.room = QLabel(idRoom)
         self.room.setStyleSheet('font: 25px; color: white')
         self.room.setAlignment(Qt.AlignCenter)
-        self.timePassed = QLabel('0:00:00')
+        self.timePassed = QLabel('—')
         self.timePassed.setStyleSheet('color: white')
         self.timePassed.setFont(QFont('DS-Digital', 25))
         self.timePassed.setAlignment(Qt.AlignCenter)
@@ -126,21 +127,22 @@ class RoomRow(QFrame):
         self.stopwatch.start(1000)
         self.callModel.player.playSound(callType)
 
-        QTimer.singleShot(15000, self.deactivateBlink)
+        QTimer.singleShot(self.callModel.alarmDuration, self.deactivateBlink)
     
-    def deactivate(self):
+    def deactivate(self, callType):
         self.isActive = False
         self.stopwatch.stop()
         self.timer.stop()
         self.disable()
-        self.timePassed.setText('0:00:00')
-        self.callModel.player.stopSound(self.callType)
+        self.timePassed.setText('—')
+        self.callModel.player.stopSound(callType)
 
     def deactivateBlink(self):
         self.timer.stop()
         if self.isActive:
             self.enable()
-            self.callModel.player.stopSound(self.callType)
+            if (self.callType != 'azul'):
+                self.callModel.player.stopSound(self.callType)
 
     def updateStopwatch(self):
         self.timePassed.setText(str(datetime.timedelta(seconds=self.elapsedTimer.elapsed()/1000)))
@@ -164,6 +166,12 @@ class CallType(QFrame):
         self.setStyleSheet( "QFrame {border: 0px; border-right : 1px solid black}" )
         self.types = {'azul': 'Codigo Azul', 'normal': 'Llamado', 'bano': 'Baño'}
 
+        self.logoH = QLabel()
+        self.logoH.setAlignment(Qt.AlignCenter)
+        self.logoH.setStyleSheet(' border: 0px; margin-bottom: 10px')
+        pixmapLogoH = QPixmap(root + '/assets/logohospital.png')
+        self.logoH.setPixmap(pixmapLogoH)
+
         self.icon = QLabel()
         self.icon.setAlignment(Qt.AlignCenter)
         self.icon.setStyleSheet(' border: 0px; margin: 0px')
@@ -172,17 +180,41 @@ class CallType(QFrame):
         self.textType.setStyleSheet('color: white; font: 35px; font-weight: bold; border: 0px')
         self.textType.setAlignment(Qt.AlignCenter)
 
+        frameTypes = QFrame()
+        frameTypes.setStyleSheet('border: 0px')
+        vboxTypes = QVBoxLayout(frameTypes)
+        vboxTypes.setAlignment(Qt.AlignCenter)
+        vboxTypes.addWidget(self.icon)
+        vboxTypes.addWidget(self.textType)
+
         vbox = QVBoxLayout(self)
-        vbox.setAlignment(Qt.AlignCenter)
-        vbox.addWidget(self.icon)
-        vbox.addWidget(self.textType)
+        vbox.setAlignment(Qt.AlignTop)
+        vbox.addWidget(self.logoH)
+        vbox.addWidget(frameTypes, 1)
+        
 
     def setIcon(self, callType):
         if callType == 'None':
             self.icon.setText(' ')
             self.textType.setText('')
         else:
-            pixmapIcon = QPixmap('assets/' + callType + '.svg')
+            pixmapIcon = QPixmap(root + '/assets/' + callType + '.svg')
             self.icon.setPixmap(pixmapIcon)
             self.textType.setText(self.types[callType])
+
+class LogoHospital(QFrame):
+    def __init__(self):
+        super(LogoHospital,self).__init__()
     
+
+class StatusBar(QStatusBar):
+    def __init__(self):
+        super(StatusBar,self).__init__()
+        self.setStyleSheet('QStatusBar::item {border: None;}')
+        self.logo = QLabel()
+        self.logo.setStyleSheet('margin-right: 10px')
+        image = QPixmap(root + '/assets/logoempresa.png')
+        self.logo.setPixmap(image)
+        self.addPermanentWidget(self.logo)
+
+

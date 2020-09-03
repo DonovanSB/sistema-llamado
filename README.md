@@ -6,10 +6,17 @@
 ```
 sudo apt-get install python-pyqt5
 sudo apt-get install python-pyqt5.qtsql
-sudo apt-get install python-pyqt5.qtmultimedia
-sudo apt-get install libqt5multimedia5-plugins
 ```
 * Pydash
 ```
 sudo pip install pydash
 ```
+* Python-vlc, para reproducir los sonidos
+```
+sudo pip install python-vlc
+```
+* Instalador de fuentes
+```
+sudo apt-get install font-manager
+```
+descargar la fuente [DS-Digital](https://www.dafont.com/es/ds-digital.font), descomprimir e instalar todas.
