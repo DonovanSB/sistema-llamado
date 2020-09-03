@@ -5,7 +5,7 @@ import serial
 import json  
 import pydash
 from vlc import MediaPlayer, Media
-from PyQt5.QtCore import QUrl, pyqtSignal, QObject
+from PyQt5.QtCore import pyqtSignal, QObject
 parent = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir)
 root = os.path.abspath(parent)
 
