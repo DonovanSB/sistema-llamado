@@ -200,12 +200,7 @@ class CallType(QFrame):
         else:
             pixmapIcon = QPixmap(root + '/assets/' + callType + '.svg')
             self.icon.setPixmap(pixmapIcon)
-            self.textType.setText(self.types[callType])
-
-class LogoHospital(QFrame):
-    def __init__(self):
-        super(LogoHospital,self).__init__()
-    
+            self.textType.setText(self.types[callType])   
 
 class StatusBar(QStatusBar):
     def __init__(self):
