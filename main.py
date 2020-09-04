@@ -80,7 +80,7 @@ class Main(QMainWindow):
     
     def changeEvent(self, event):
         if(event.type() == QEvent.WindowStateChange):
-            if(self.isMaximized()):
+            if(self.isMaximized() or self.isFullScreen()):
                 self.statusbar.logo.setStyleSheet('margin-right: 20px')
             else:
                 self.statusbar.logo.setStyleSheet('margin-right: 0px')
