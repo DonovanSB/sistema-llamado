@@ -32,7 +32,7 @@ class Main(QMainWindow):
         # lista para creacion de habitaciones
         self.rooms = ['201','202','203','204','205A','205B','206']
         # Puerto Serial
-        portSerial = '/dev/ttyUSB0'
+        portSerial = '/dev/ttyS0'
         # Duración de las alarmas
         alarmDuration = 15000 # en milisegundos
 
