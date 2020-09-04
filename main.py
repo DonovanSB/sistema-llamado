@@ -48,6 +48,7 @@ class Main(QMainWindow):
         self.createWidgets()
 
         # Inicializaciones
+        self.flagFullScreen = False
         player = service.Player()
         self.callModel.player = player
         self.callModel.callType = self.callType
@@ -67,7 +68,15 @@ class Main(QMainWindow):
         self.thread.start()
 
         # Mostrar la interfaz
-        self.show()
+        self.showFullScreen()
+
+    def mouseDoubleClickEvent(self, QMouseEvent):
+        if (QMouseEvent.button() == Qt.LeftButton):
+            if self.flagFullScreen:
+                self.showFullScreen()
+            else:
+                self.showNormal()
+            self.flagFullScreen = not self.flagFullScreen
     
     def changeEvent(self, event):
         if(event.type() == QEvent.WindowStateChange):

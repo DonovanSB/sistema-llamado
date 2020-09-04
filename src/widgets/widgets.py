@@ -46,6 +46,7 @@ class ToolBar(QToolBar):
 
         self.setMovable(False)
         self.setFixedHeight(55)
+        self.setContextMenuPolicy(Qt.PreventContextMenu)
 
 class RoomTable(QFrame):
     def __init__(self, rooms):
