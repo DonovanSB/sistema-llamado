@@ -96,6 +96,10 @@ class RoomRow(QFrame):
 
         self.elapsedTimer = QElapsedTimer()
         self.elapsedTimer.start()
+        self.timerSingle = QTimer()
+        self.timerSingle.setSingleShot(True)
+        self.timerSingle.timeout.connect(self.deactivateBlink)
+
         self.timer = QTimer()
         self.timer.timeout.connect(self.blink)
         self.stopwatch = QTimer()
@@ -127,9 +131,9 @@ class RoomRow(QFrame):
         self.timer.start(500)
         self.stopwatch.start(1000)
         self.callModel.player.playSound(callType)
+        
+        self.timerSingle.start(self.callModel.alarmDuration)
 
-        QTimer.singleShot(self.callModel.alarmDuration, self.deactivateBlink)
-    
     def deactivate(self, callType):
         self.isActive = False
         self.stopwatch.stop()
