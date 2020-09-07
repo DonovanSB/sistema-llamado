@@ -55,6 +55,9 @@ class Main(QMainWindow):
         self.callModel.roomRows = self.roomTable.roomRows
         self.callModel.signalUpdateCalls.connect(self.listenCalls)
         self.callService = service.CallService()
+        
+        self.player2 = service.Player2()
+        self.player2.playSound('azul')
 
         # Timer para actualizar la hora
         self.timerHour = QTimer()
@@ -62,8 +65,8 @@ class Main(QMainWindow):
         self.timerHour.start(1000)
 
         # Iniciar conexion serial en otro hilo
-        self.thread = Thread()
-        self.thread.start()
+        # self.thread = Thread()
+        # self.thread.start()
 
         # Mostrar la interfaz
         self.showFullScreen()

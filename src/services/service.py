@@ -4,8 +4,9 @@ import os
 import serial
 import json  
 import pydash
+from PyQt5 import QtMultimedia
 from vlc import Instance
-from PyQt5.QtCore import pyqtSignal, QObject
+from PyQt5.QtCore import pyqtSignal, QObject, QUrl
 parent = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir)
 root = os.path.abspath(parent)
 
@@ -103,7 +104,23 @@ class Player:
             if self.player.is_playing():
                 self.player.stop()
 
+class Player2(QtMultimedia.QMediaPlayer):
+    def __init__(self):
+        super(Player2,self).__init__()
+        azulSound = QtMultimedia.QMediaContent(QUrl.fromLocalFile(root + '/assets/azul.mp3'))
+        normalSound = QtMultimedia.QMediaContent(QUrl.fromLocalFile(root + '/assets/normal.mp3'))
+        banoSound = QtMultimedia.QMediaContent(QUrl.fromLocalFile(root + '/assets/bano.mp3'))
+        self.typeSounds = {'azul': azulSound, 'normal': normalSound, 'bano': banoSound}
 
+    def playSound(self, callType):
+        self.currentSound = callType
+        self.setMedia(self.typeSounds[callType])
+        self.setVolume(100)
+        self.play()
+
+    def stopSound(self, callType):
+        if self.currentSound == callType:
+            self.stop()
 @singleton
 class CallModel(QObject):
     signalUpdateCalls = pyqtSignal(object)
