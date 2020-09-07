@@ -56,11 +56,6 @@ class Main(QMainWindow):
         self.callModel.signalUpdateCalls.connect(self.listenCalls)
         self.callService = service.CallService()
 
-        # player2 = service.Player2()
-
-        self.callService.activate('203', 'normal')
-        QTimer.singleShot(7000, lambda: self.callService.activate('203', 'normal'))
-
         # Timer para actualizar la hora
         self.timerHour = QTimer()
         self.timerHour.timeout.connect(self.showHour)

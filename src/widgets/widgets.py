@@ -138,6 +138,7 @@ class RoomRow(QFrame):
         self.isActive = False
         self.stopwatch.stop()
         self.timer.stop()
+        self.timerSingle.stop()
         self.disable()
         self.timePassed.setText('—')
         self.callModel.player.stopSound(callType)

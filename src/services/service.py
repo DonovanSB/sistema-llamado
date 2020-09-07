@@ -4,7 +4,7 @@ import os
 import serial
 import json  
 import pydash
-from vlc import MediaPlayer, Media, AudioOutput
+from vlc import Instance
 from PyQt5.QtCore import pyqtSignal, QObject
 parent = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir)
 root = os.path.abspath(parent)
@@ -84,11 +84,11 @@ class CallService:
 
 class Player:
     def __init__(self):
-        self.player = MediaPlayer()
-        self.player.audio_output_set('--aout=alsa')
-        azulSound = Media(root + '/assets/azul.mp3')
-        normalSound = Media(root + '/assets/normal.mp3')
-        banoSound = Media(root + '/assets/bano.mp3')
+        self.vlcInstance = Instance('--aout=alsa')
+        self.player = self.vlcInstance.media_player_new()
+        azulSound = self.vlcInstance.media_new(root + '/assets/azul.mp3')
+        normalSound = self.vlcInstance.media_new(root + '/assets/normal.mp3')
+        banoSound = self.vlcInstance.media_new(root + '/assets/bano.mp3')
         self.typeSounds = {'azul': azulSound, 'normal': normalSound, 'bano': banoSound}
         self.currentSound = None
 
