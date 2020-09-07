@@ -62,8 +62,8 @@ class Main(QMainWindow):
         self.timerHour.start(1000)
 
         # Iniciar conexion serial en otro hilo
-        # self.thread = Thread()
-        # self.thread.start()
+        self.thread = Thread()
+        self.thread.start()
 
         # Mostrar la interfaz
         self.showFullScreen()
