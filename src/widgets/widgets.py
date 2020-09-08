@@ -163,6 +163,7 @@ class RoomRow(QFrame):
     def enable(self, callType = None):
         if callType:
             self.setStyleSheet( 'QFrame {background:' + self.types[callType] + '; border-radius: 10px; margin: 0px}' )
+            self.isActive = True
         else:
             self.setStyleSheet( 'QFrame {background:' + self.types[self.callType] + '; border-radius: 10px; margin: 0px}' )
 
