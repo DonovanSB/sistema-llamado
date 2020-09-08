@@ -160,11 +160,15 @@ class RoomRow(QFrame):
             self.disable()
         self.flagBlink = not self.flagBlink
 
-    def enable(self):
-        self.setStyleSheet( 'QFrame {background:' + self.types[self.callType] + '; border-radius: 10px; margin: 0px}' )
-    
+    def enable(self, callType = None):
+        if callType:
+            self.setStyleSheet( 'QFrame {background:' + self.types[callType] + '; border-radius: 10px; margin: 0px}' )
+        else:
+            self.setStyleSheet( 'QFrame {background:' + self.types[self.callType] + '; border-radius: 10px; margin: 0px}' )
+
     def disable(self):
         self.setStyleSheet( 'QFrame {background: #757575; border-radius: 10px; margin: 0px}' )
+    
 
 class CallType(QFrame):
     def __init__(self):

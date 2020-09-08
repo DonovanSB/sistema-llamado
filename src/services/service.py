@@ -75,9 +75,13 @@ class CallService:
     def deactivate(self, name, callType):
         index = self.callModel.roomNames.index(name)
         self.callModel.roomRows[index].deactivate(callType)
-        pydash.remove(self.callList, {'name': name})
+        pydash.remove(self.callList, {'name': name, 'type': callType})
         if len(self.callList) > 0:
+            pending = pydash.find_last(self.callList, {'name': name})      
             self.callModel.callType.setIcon(self.callList[-1]['type'])
+            if pending:
+                indexPending = self.callModel.roomNames.index(pending['name'])
+                self.callModel.roomRows[indexPending].enable(pending['type'])
         else:
             self.callModel.callType.setIcon('None')
 
